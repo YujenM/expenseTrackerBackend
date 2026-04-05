@@ -29,7 +29,6 @@ const PORT = process.env.PORT || 5000;
 const { Sequelize } = require("./models");
 
 if (process.env.DB_TYPE === "mysql") {
-  console.log("this", process.env.DB_TYPE);
   const sequelize = new Sequelize(
     process.env.DB_Name,
     process.env.DB_User,
@@ -78,6 +77,8 @@ if (process.env.DB_TYPE === "mysql") {
     }
   })();
 }
+
+app.use('/v1/expense', require('./routes/v1'));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

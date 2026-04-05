@@ -1,19 +1,19 @@
-require("dotenv").config({ path: "../../.env" });
+require("dotenv").config({ path: "../.env" });
 
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
 module.exports = {
   development: {
     url: process.env.DB_URL,
-    dialect: 'postgres',
+    dialect: "postgres",
     useUTC: true,
-    timezone: '+00:00',
+    timezone: "+00:00",
     logging: console.log,
     dialectOptions: {
       connectTimeout: 60000,
       ssl: {
         require: true,
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
       },
       statement_timeout: 60000,
       keepAlive: true,
@@ -44,9 +44,9 @@ module.exports = {
   },
   staging: {
     url: process.env.DB_URL,
-    dialect: 'postgres',
+    dialect: "postgres",
     useUTC: true,
-    timezone: '+00:00',
+    timezone: "+00:00",
     logging: (msg, queryTime) => console.log(`[SQL] ${msg} (${queryTime}ms)`),
     dialectOptions: {
       connectTimeout: 60000,
@@ -84,9 +84,9 @@ module.exports = {
   },
   production: {
     url: process.env.DB_URL,
-    dialect: 'postgres',
+    dialect: "postgres",
     useUTC: true,
-    timezone: '+00:00',
+    timezone: "+00:00",
     logging: false,
     dialectOptions: {
       connectTimeout: 60000,
@@ -126,7 +126,7 @@ module.exports = {
   },
   test: {
     url: process.env.DB_URL,
-    dialect: 'postgres',
+    dialect: "postgres",
     logging: false,
     pool: {
       max: 5,
