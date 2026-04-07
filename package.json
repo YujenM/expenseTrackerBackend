@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/app.ts",
+    "start": "nodemon server/app.js",
     "test": "mocha server/tests/**/*.js",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",

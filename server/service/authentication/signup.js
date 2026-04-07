@@ -1,14 +1,7 @@
-import { error } from "node:console";
-
 const { User } = require("../../models");
 const validationErrorSignup = require("../../errors");
 
-module.exports = async (
-  email: string,
-  phone: string,
-  password: string,
-  fullName: String,
-) => {
+module.exports = async (email, phone, password, fullName) => {
   const user = await User.findOne({
     where: {
       email: email,

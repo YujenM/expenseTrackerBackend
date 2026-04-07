@@ -10,25 +10,32 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50),
+        unique: true,
+        allowNull: false
       },
       phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(20),
+        unique: true,
+        allowNull: false
       },
       password_hash: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(100),
+        allowNull: false
       },
       avatar_url: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(255),
+      },
+      fullName: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      otp: {
+        type: Sequelize.STRING(6),
+        unique: true,
       },
       last_login: {
         type: Sequelize.DATE
-      },
-      fullName: {
-        type: Sequelize.STRING
-      },
-      otp: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

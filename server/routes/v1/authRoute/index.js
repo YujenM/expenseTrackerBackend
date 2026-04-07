@@ -2,7 +2,7 @@ const expenseRouter = require("express").Router();
 const jwtService = require("../../../utils/authenticate-jwt-token");
 const findUserBasedOnEmail = require("../../../utils/find-user-based-on-email");
 
-expenseRouter.use(jwtService, (req: any, res: any, next: any) => {
+expenseRouter.use(jwtService, (req, res, next) => {
   try {
     next();
   } catch (error) {
@@ -11,7 +11,7 @@ expenseRouter.use(jwtService, (req: any, res: any, next: any) => {
   }
 });
 
-expenseRouter.use(async (req: any, res: any, next: any) => {
+expenseRouter.use(async (req, res, next) => {
   try {
     req.decoded = await findUserBasedOnEmail(req.auth);
     next();
@@ -20,7 +20,7 @@ expenseRouter.use(async (req: any, res: any, next: any) => {
   }
 });
 
-expenseRouter.get("/expensetest", (req: any, res: any, next: any) => {
+expenseRouter.get("/expensetest", (req, res, next) => {
   try {
     res.json({ message: "Expense test successful", user: req.decoded });
   } catch (error) {

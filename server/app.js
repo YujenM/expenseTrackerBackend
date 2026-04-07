@@ -1,9 +1,9 @@
 // imports
-import express from "express";
-import { rateLimit } from "express-rate-limit";
-import httpStatus from "http-status";
-import dotenv from "dotenv";
-import cors from "cors";
+const express = require("express");
+const rateLimit = require("express-rate-limit");
+const httpStatus = require("http-status");
+const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -45,20 +45,22 @@ if (process.env.DB_TYPE === "mysql") {
         "Connection to the database has been established successfully.",
       );
       await sequelize.sync();
-    } catch (error: any) {
+    } catch (error) {
       console.error(
         "Unable to connect to the database:",
         error.original.sqlMessage,
       );
     }
   })();
-} else if (process.env.DB_TYPE === 'postgres') {
+} else if (process.env.DB_TYPE === "postgres") {
   const sequelize = new Sequelize(process.env.DB_URL, {
-    dialect: 'postgres',
+    dialect: "postgres",
     dialectOptions: {
       ssl: {
         require: process.env.DB_SSL_REQUIRE ? true : false,
-        rejectUnauthorized: process.env.DB_SSL_REJECTUNAUTHORIZED ? true : false,
+        rejectUnauthorized: process.env.DB_SSL_REJECTUNAUTHORIZED
+          ? true
+          : false,
       },
     },
   });
@@ -69,7 +71,7 @@ if (process.env.DB_TYPE === "mysql") {
         "Connection to the database has been established successfully.",
       );
       await sequelize.sync();
-    } catch (error: any) {
+    } catch (error) {
       console.error(
         "Unable to connect to the database:",
         error.original.sqlMessage,
@@ -78,7 +80,7 @@ if (process.env.DB_TYPE === "mysql") {
   })();
 }
 
-app.use('/v1/expense', require('./routes/v1'));
+app.use("/v1/expense", require("./routes/v1"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

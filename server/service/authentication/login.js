@@ -1,8 +1,9 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 const { User } = require("../../models");
 const validationError = require("../../errors");
 
-module.exports = async (email: string, password: string) => {
+module.exports = async (email, password) => {
+  console.log("here", email, password);
   const user = await User.findOne({
     where: { email: email },
   });
@@ -17,8 +18,7 @@ module.exports = async (email: string, password: string) => {
 
   const token = jwt.sign(
     { id: user.id, email: user.email },
-    process.env.JWT_SECRET as string,
-
+    process.env.JWT_SECRET,
     { expiresIn: "1d" },
   );
   return token;

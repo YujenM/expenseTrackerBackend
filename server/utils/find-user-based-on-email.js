@@ -1,7 +1,7 @@
 const { User } = require("../models");
 const { validationErrorUser } = require("../errors");
 
-module.exports = async (auth: any) => {
+module.exports = async (auth) => {
   try {
     const user = await User.findOne({
       where: {
@@ -13,7 +13,7 @@ module.exports = async (auth: any) => {
       throw new validationErrorUser("User not found", 404);
     }
     return user;
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
   }
 };
