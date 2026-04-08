@@ -9,7 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Account, { foreignKey: "user_id", as: "accounts" });
+      User.hasMany(models.Category, {
+        foreignKey: "user_id",
+        as: "categories",
+      });
+      User.hasMany(models.Income, { foreignKey: "user_id", as: "incomes" });
+      User.hasMany(models.Expense, { foreignKey: "user_id", as: "expenses" });
+      User.hasMany(models.Loan, { foreignKey: "user_id", as: "loans" });
+      User.hasMany(models.Installment, {
+        foreignKey: "user_id",
+        as: "installments",
+      });
+      User.hasMany(models.Savings, { foreignKey: "user_id", as: "savings" });
     }
 
     async validPassword(password) {
