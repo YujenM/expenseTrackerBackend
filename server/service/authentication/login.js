@@ -3,7 +3,6 @@ const { User } = require("../../models");
 const validationError = require("../../errors");
 
 module.exports = async (email, password) => {
-  console.log("here", email, password);
   const user = await User.findOne({
     where: { email: email },
   });

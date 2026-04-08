@@ -1,7 +1,9 @@
 const expenseRouter = require("express").Router();
 const jwtService = require("../../../utils/authenticate-jwt-token");
 const findUserBasedOnEmail = require("../../../utils/find-user-based-on-email");
-
+const accProviderController = require("../../../controllers/accProvider");
+const upload = require("../../../utils/cloudinary");
+const { Utils } = require("sequelize");
 expenseRouter.use(jwtService, (req, res, next) => {
   try {
     next();
@@ -27,5 +29,11 @@ expenseRouter.get("/expensetest", (req, res, next) => {
     next(error);
   }
 });
+
+expenseRouter.post(
+  "/provider",
+  upload.single("logo_url"),
+  accProviderController.addProvider,
+);
 
 module.exports = expenseRouter;

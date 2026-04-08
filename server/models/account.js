@@ -29,7 +29,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Account.init(
     {
-      id: { type: DataTypes.UUID },
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       user_id: { type: DataTypes.UUID },
       provider_id: { type: DataTypes.UUID },
       account_name: { type: DataTypes.STRING(100) },

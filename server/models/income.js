@@ -14,9 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Income.init(
     {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+     id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
       user_id: { type: DataTypes.UUID, allowNull: false },

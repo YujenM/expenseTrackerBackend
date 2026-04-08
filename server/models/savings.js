@@ -18,8 +18,9 @@ module.exports = (sequelize, DataTypes) => {
   Savings.init(
     {
       id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
       user_id: { type: DataTypes.UUID, allowNull: false },

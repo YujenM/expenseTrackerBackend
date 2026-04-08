@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   Loan.init(
     {
       id: {
-        tpye: DataTypes.UUID,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
