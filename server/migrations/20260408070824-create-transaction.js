@@ -11,10 +11,10 @@ module.exports = {
       },
 
       user_id: {
-        type: Sequelize.UUID
+        type: Sequelize.INTEGER
       },
       account_id: {
-        type: Sequelize.UUID
+        type: Sequelize.INTEGER
       },
       type: {
         type: Sequelize.STRING(20)

@@ -2,7 +2,6 @@ const addProviderService = require("../../service/provider");
 
 module.exports = async (req, res, next) => {
   try {
-    console.log("here----", req.decoded.id);
     const { name, type } = req.body;
     const logo_url = req.file ? req.file.path : null;
     const response = await addProviderService.addProvider({

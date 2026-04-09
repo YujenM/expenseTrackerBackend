@@ -10,13 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.UUID
+        type: Sequelize.INTEGER
       },
       account_id: {
-        type: Sequelize.UUID
+        type: Sequelize.INTEGER
       },
       category_id: {
-        type: Sequelize.UUID
+        type: Sequelize.INTEGER
       },
       amount: {
         type: Sequelize.DECIMAL(10,2)
