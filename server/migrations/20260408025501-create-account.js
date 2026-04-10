@@ -1,38 +1,42 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Accounts', {
+    await queryInterface.createTable("Accounts", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       provider_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       account_name: {
-        type: Sequelize.STRING(100)
+        type: Sequelize.STRING(100),
       },
       balance: {
         type: Sequelize.DECIMAL(10, 2),
-        defaultValue: 0.00
+        defaultValue: 0.0,
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Accounts');
-  }
+    await queryInterface.dropTable("Accounts");
+  },
 };

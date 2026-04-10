@@ -35,6 +35,6 @@ expenseRouter.post(
   accProviderController.addProvider,
 );
 
-expenseRouter.use('/account', require('./accountRoute'));
+expenseRouter.use("/account", require("./accountRoute"));
 
 module.exports = expenseRouter;

@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
       provider_id: { type: DataTypes.INTEGER },
       account_name: { type: DataTypes.STRING(100) },
       balance: { type: DataTypes.DECIMAL(10, 2), defaultValue: 0.0 },
+      active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     },
     {
       sequelize,
