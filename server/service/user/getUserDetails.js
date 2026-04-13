@@ -7,6 +7,13 @@ module.exports = async (queryObj) => {
       id: queryObj.userId,
     },
     attributes: ["id", "fullName", "phone"],
+    include: [
+      {
+        model: Account,
+        as: "accounts",
+        attributes: ["id", "balance", "account_name"],
+      },
+    ],
   });
   if (!user) {
     throw validationErrors.notFound("User not found");
