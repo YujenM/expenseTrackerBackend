@@ -80,6 +80,12 @@ if (process.env.DB_TYPE === "mysql") {
   })();
 }
 
+app.get('/',(req,res)=>{
+  res.status(200).json({
+    message:"expense Tracker Api"
+  })
+})
+
 app.use("/v1/expense", require("./routes/v1"));
 
 app.listen(PORT, () => {
