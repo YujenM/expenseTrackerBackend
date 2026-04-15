@@ -1,4 +1,4 @@
-const { User, Account } = require("../../models");
+const { User, Account, Provider } = require("../../models");
 const validationErrors = require("../../errors");
 
 module.exports = async (queryObj) => {
@@ -12,6 +12,13 @@ module.exports = async (queryObj) => {
         model: Account,
         as: "accounts",
         attributes: ["id", "balance", "account_name"],
+        include: [
+          {
+            model: Provider,
+            as: "provider",
+            attributes: ["id", "name", "logo_url"],
+          },
+        ],
       },
     ],
   });
