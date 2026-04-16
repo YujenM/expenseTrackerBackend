@@ -2,12 +2,13 @@ const router = require("express").Router();
 const accountController = require("../../../controllers/account");
 
 router
-  .route("/account")
+  .route("/")
   .post(accountController.createAccount)
   .get(accountController.listAccount);
 router
-  .route("/account/:id")
+  .route("/:id")
   .put(accountController.updateAccount)
   .delete(accountController.deleteAccount);
 
+router.route("/provider").get(accountController.getProvider);
 module.exports = router;
