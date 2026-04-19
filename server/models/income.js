@@ -9,12 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Income.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
-      Income.belongsTo(models.Account, { foreignKey: "account_id", as: "account" });
+      Income.belongsTo(models.Account, {
+        foreignKey: "account_id",
+        as: "account",
+      });
     }
   }
   Income.init(
     {
-     id: {
+      id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -26,6 +29,15 @@ module.exports = (sequelize, DataTypes) => {
       source: { type: DataTypes.STRING(100), allowNull: false },
       description: { type: DataTypes.TEXT(200), allowNull: false },
       income_date: { type: DataTypes.DATE, allowNull: false },
+      isPrimary: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      nextExpectedDate: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
     },
     {
       sequelize,
