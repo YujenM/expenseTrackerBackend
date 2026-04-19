@@ -39,5 +39,6 @@ expenseRouter.use("/account", require("./accountRoute"));
 expenseRouter.use("/user", require("./UserDetail"));
 
 expenseRouter.use("/income", require("./incomeRoute"));
+expenseRouter.use("/category", require("./category"));
 
 module.exports = expenseRouter;
