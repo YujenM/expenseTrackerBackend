@@ -13,6 +13,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "category_id",
         as: "expenses",
       });
+      Category.hasMany(models.Income, {
+        foreignKey: "category_id",
+        as: "incomes",
+      });
+      Category.hasMany(models.Savings, {
+        foreignKey: "category_id",
+        as: "savings",
+      });
+      Category.hasMany(models.Loan, {
+        foreignKey: "category_id",
+        as: "loans",
+      });
     }
   }
   Category.init(
@@ -25,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: { type: DataTypes.INTEGER },
       name: { type: DataTypes.STRING(100) },
+      imageUrl: { type: DataTypes.STRING(255) },
     },
     {
       sequelize,

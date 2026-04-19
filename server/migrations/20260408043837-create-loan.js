@@ -13,6 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      category_id: { type: Sequelize.INTEGER, allowNull: false },
       person_name: {
         type: Sequelize.STRING(50),
       },

@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "account_id",
         as: "account",
       });
+      Savings.belongsTo(models.Category, {
+        foreignKey: "category_id",
+        as: "category",
+      });
     }
   }
   Savings.init(
@@ -25,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: { type: DataTypes.INTEGER, allowNull: false },
       account_id: { type: DataTypes.INTEGER, allowNull: false },
+      category_id: { type: DataTypes.INTEGER, allowNull: false },
       type: { type: DataTypes.STRING(50), allowNull: false },
       amount: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
       start_date: { type: DataTypes.DATE, allowNull: false },

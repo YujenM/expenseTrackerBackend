@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Loan.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
+      Loan.belongsTo(models.Category, {
+        foreignKey: "category_id",
+        as: "category",
+      });
     }
   }
   Loan.init(
@@ -20,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       user_id: { type: DataTypes.INTEGER, allowNull: false },
+      category_id: { type: DataTypes.INTEGER, allowNull: false },
       person_name: { type: DataTypes.STRING(50), allowNull: false },
       amount: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
       given_date: { type: DataTypes.DATE, allowNull: false },
