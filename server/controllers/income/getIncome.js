@@ -2,7 +2,6 @@ const incomeServices = require("../../service/income");
 
 module.exports = async (req, res, next) => {
   try {
-    console.log('here',req.decoded.id)
     const response = await incomeServices.getIncome({
       user_Id: req.decoded.id,
     });
