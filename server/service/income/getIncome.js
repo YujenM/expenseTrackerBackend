@@ -5,7 +5,15 @@ module.exports = async (queryObj) => {
     where: {
       user_id: queryObj.user_Id,
     },
-    attributes:['id','account_id','amount','source','description','category_id'],
+    attributes: [
+      "id",
+      "account_id",
+      "amount",
+      "source",
+      "description",
+      "category_id",
+      "income_date",
+    ],
     include: [
       {
         model: Account,
