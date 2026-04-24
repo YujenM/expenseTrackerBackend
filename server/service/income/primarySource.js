@@ -9,9 +9,6 @@ module.exports = async (queryObj) => {
     },
   });
 
-  if (!primarySource) {
-    throw new validationError("No primary income source found", 404);
-  }
 
   return primarySource;
 };
