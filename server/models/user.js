@@ -64,6 +64,11 @@ module.exports = (sequelize, DataTypes) => {
       last_login: {
         type: DataTypes.DATE,
       },
+      dateFormat: {
+        type: DataTypes.STRING(6),
+        defaultValue: "AD",
+        allowNull: false,
+      },
     },
     {
       sequelize,
