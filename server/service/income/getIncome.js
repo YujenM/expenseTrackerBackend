@@ -14,6 +14,7 @@ module.exports = async (queryObj) => {
       "category_id",
       "income_date",
       "nextExpectedDate",
+      "isPrimary",
     ],
     include: [
       {
