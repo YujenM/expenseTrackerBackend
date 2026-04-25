@@ -1,4 +1,4 @@
-const { Income, Account, Provider,Category } = require("../../models");
+const { Income, Account, Provider, Category } = require("../../models");
 const validationError = require("../../errors");
 module.exports = async (queryObj) => {
   const income = await Income.findAll({
@@ -13,7 +13,7 @@ module.exports = async (queryObj) => {
       "description",
       "category_id",
       "income_date",
-      "nextExpectedDate"
+      "nextExpectedDate",
     ],
     include: [
       {
@@ -24,15 +24,15 @@ module.exports = async (queryObj) => {
           {
             model: Provider,
             as: "provider",
-            attributes: ["name", "logo_url", "type"],
+            attributes: ["id", "name", "logo_url", "type"],
           },
         ],
       },
       {
-        model:Category,
-        as:'category',
-        attributes:["name"]
-      }
+        model: Category,
+        as: "category",
+        attributes: ["id", "name"],
+      },
     ],
   });
 
