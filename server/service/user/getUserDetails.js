@@ -6,7 +6,7 @@ module.exports = async (queryObj) => {
     where: {
       id: queryObj.userId,
     },
-    attributes: ["id", "fullName", "phone"],
+    attributes: ["id", "fullName", "phone", "dateFormat"],
     include: [
       {
         model: Account,
