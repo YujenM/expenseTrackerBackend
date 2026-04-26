@@ -69,6 +69,9 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "AD",
         allowNull: false,
       },
+      monthly_budget: {
+        type: DataTypes.DECIMAL(100, 3),
+      },
     },
     {
       sequelize,
