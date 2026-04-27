@@ -1,5 +1,6 @@
-const { User, Account, Provider } = require("../../models");
+const { User, Account, Provider, Income, Expense } = require("../../models");
 const validationErrors = require("../../errors");
+const { Op } = require("sequelize");
 
 module.exports = async (queryObj) => {
   const user = await User.findOne({
@@ -25,6 +26,17 @@ module.exports = async (queryObj) => {
   if (!user) {
     throw validationErrors.notFound("User not found");
   }
+  const now = new Date();
+
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+  );
   const totalBalance =
     (await Account.sum("balance", {
       where: {
@@ -32,8 +44,23 @@ module.exports = async (queryObj) => {
         active: true,
       },
     })) || 0;
+
+  const monthlyIncome = await Income.sum("amount", {
+    where: {
+      user_id: user.id,
+      createdAt: { [Op.between]: [startOfMonth, endOfMonth] },
+    },
+  });
+  const monthlyExpense = await Expense.sum("amount", {
+    where: {
+      user_id: user.id,
+      createdAt: { [Op.between]: [startOfMonth, endOfMonth] },
+    },
+  });
   return {
     user,
     totalBalance,
+    monthlyIncome,
+    monthlyExpense,
   };
 };

@@ -19,7 +19,7 @@ module.exports = async (createObj) => {
     throw new ValidaitionError("account not found", 404);
   }
   if (account.balance < createObj.amount) {
-    await t.rollback()
+    await t.rollback();
     throw new ValidationError("insufficent balance in account", 403);
   }
 
@@ -36,6 +36,7 @@ module.exports = async (createObj) => {
       category_id: createObj.category_id,
       amount: createObj.amount,
       description: createObj.description,
+      expense_date: createObj.expense_date,
     },
     {
       transaction: t,

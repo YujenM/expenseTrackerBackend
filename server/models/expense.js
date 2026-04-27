@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       category_id: { type: DataTypes.INTEGER, allowNull: false },
       amount: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
       description: { type: DataTypes.TEXT(200), allowNull: false },
+      expense_date: { type: DataTypes.DATE, allowNull: false },
     },
     {
       sequelize,
