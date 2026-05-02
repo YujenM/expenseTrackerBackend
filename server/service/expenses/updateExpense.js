@@ -2,6 +2,7 @@ const { Expense, Account, sequelize } = require("../../models");
 const ValidaitionError = require("../../errors");
 
 module.exports = async (createObj) => {
+  console.log("here", createObj.category_id);
   const t = await sequelize.transaction();
 
   const expense = await Expense.findOne({
@@ -19,7 +20,7 @@ module.exports = async (createObj) => {
 
   const account = await Account.findOne({
     where: {
-      id: createObj.accountId,
+      id: expense.account_id,
     },
     transaction: t,
   });
@@ -38,9 +39,10 @@ module.exports = async (createObj) => {
 
   await expense.update(
     {
-      amount: createObj.amount,
-      description: createObj.description,
-      expense_date:createObj.expense_date
+      amount: createObj?.amount,
+      description: createObj?.description,
+      expense_date: createObj?.expense_date,
+      category_id: createObj?.category_id,
     },
     { transaction: t },
   );
