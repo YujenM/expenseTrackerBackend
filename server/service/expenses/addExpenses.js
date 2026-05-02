@@ -18,9 +18,9 @@ module.exports = async (createObj) => {
     await t.rollback();
     throw new ValidaitionError("account not found", 404);
   }
-  if (account.balance < createObj.amount) {
+  if (parseFloat(account.balance) < parseFloat(createObj.amount)) {
     await t.rollback();
-    throw new ValidationError("insufficent balance in account", 403);
+    throw new ValidationError("insufficient balance in account", 403);
   }
 
   await account.decrement(

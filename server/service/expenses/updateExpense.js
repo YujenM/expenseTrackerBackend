@@ -2,7 +2,6 @@ const { Expense, Account, sequelize } = require("../../models");
 const ValidaitionError = require("../../errors");
 
 module.exports = async (createObj) => {
-  console.log("here", createObj.category_id);
   const t = await sequelize.transaction();
 
   const expense = await Expense.findOne({
@@ -30,7 +29,7 @@ module.exports = async (createObj) => {
     throw new ValidaitionError("account not found", 404);
   }
 
-  if (account.balance < createObj.amount) {
+  if (parseFloat(account.balance) < parseFloat(createObj.amount)) {
     await t.rollback();
     throw new ValidaitionError("insufficent balance in account", 403);
   }
