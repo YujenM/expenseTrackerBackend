@@ -10,16 +10,15 @@ const { Op } = require("sequelize");
 
 module.exports = async (queryObj) => {
   const { userId } = queryObj;
-
-  const startOfMonth = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    1,
-  );
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
   const endOfMonth = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth() + 1,
+    now.getFullYear(),
+    now.getMonth() + 1,
     0,
+    23,
+    59,
+    59,
   );
 
   const incomes = await Income.findAll({

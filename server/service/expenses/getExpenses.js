@@ -1,11 +1,11 @@
-const { User, Expense, Category, Account,Provider } = require("../../models");
+const { User, Expense, Category, Account, Provider } = require("../../models");
 const { Op } = require("sequelize");
 const validationError = require("../../errors");
 
 module.exports = async (obj) => {
   const now = new Date();
 
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
   const endOfMonth = new Date(
     now.getFullYear(),
     now.getMonth() + 1,
@@ -22,6 +22,7 @@ module.exports = async (obj) => {
   const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
   endOfWeek.setHours(23, 59, 59, 999);
+  
 
   const monthlyExpense = await Expense.sum("amount", {
     where: {
@@ -46,7 +47,10 @@ module.exports = async (obj) => {
     throw new validationError("user not found", 404);
   }
 
-  const monthlySpentOnpercentage = (monthlyExpense / user.monthly_budget) * 100;
+  const monthlySpentOnpercentage = (
+    (monthlyExpense / user.monthly_budget) *
+    100
+  ).toFixed(2);
 
   const dayOfMonth = now.getDate();
   const dailyAverage = monthlyExpense / dayOfMonth;
@@ -66,14 +70,14 @@ module.exports = async (obj) => {
       {
         model: Account,
         as: "account",
-        attributes:['id','provider_id','account_name'],
-        include:[
+        attributes: ["id", "provider_id", "account_name"],
+        include: [
           {
-            model:Provider,
-            as:'provider',
-            attributes:['logo_url']
-          }
-        ]
+            model: Provider,
+            as: "provider",
+            attributes: ["logo_url"],
+          },
+        ],
       },
     ],
   });
