@@ -1,9 +1,23 @@
 const { Income, Account, Provider, Category } = require("../../models");
+const { Op } = require("sequelize");
 const validationError = require("../../errors");
 module.exports = async (queryObj) => {
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
+  const endOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+  );
   const income = await Income.findAll({
     where: {
       user_id: queryObj.user_Id,
+      income_date: {
+        [Op.between]: [startOfMonth, endOfMonth],
+      },
     },
     attributes: [
       "id",
