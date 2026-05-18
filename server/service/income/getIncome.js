@@ -57,6 +57,9 @@ module.exports = async (queryObj) => {
 
   const totalIncome = await Income.sum("amount", {
     where: {
+      income_date: {
+        [Op.between]: [startOfMonth, endOfMonth],
+      },
       user_id: queryObj.user_Id,
     },
   });
