@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "category_id",
         as: "category",
       });
+      Savings.hasMany(models.SavingTransaction, {
+        foreignKey: "saving_id",
+        as: "transactions",
+      });
     }
   }
   Savings.init(
@@ -35,6 +39,28 @@ module.exports = (sequelize, DataTypes) => {
       start_date: { type: DataTypes.DATE, allowNull: false },
       end_date: { type: DataTypes.DATE, allowNull: false },
       interest_rate: { type: DataTypes.DECIMAL(5, 2), allowNull: false },
+      monthly_installment: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+        comment: "Only for RD",
+      },
+      total_deposited: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+        defaultValue: 0.0,
+      },
+      maturity_amount: { type: DataTypes.DECIMAL(10, 2), allowNull: true },
+      interest_rate: {
+        type: DataTypes.DECIMAL(5, 2),
+        allowNull: false,
+        defaultValue: 0.0,
+      },
+      status: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        defaultValue: "active",
+        comment: "active, matured, withdrawn, cancelled",
+      },
     },
     {
       sequelize,
