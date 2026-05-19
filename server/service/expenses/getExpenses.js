@@ -22,7 +22,6 @@ module.exports = async (obj) => {
   const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
   endOfWeek.setHours(23, 59, 59, 999);
-  
 
   const monthlyExpense = await Expense.sum("amount", {
     where: {
@@ -75,7 +74,7 @@ module.exports = async (obj) => {
           {
             model: Provider,
             as: "provider",
-            attributes: ["logo_url"],
+            attributes: ["name", "logo_url"],
           },
         ],
       },

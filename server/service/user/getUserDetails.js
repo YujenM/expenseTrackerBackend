@@ -27,7 +27,6 @@ module.exports = async (queryObj) => {
     throw validationErrors.notFound("User not found");
   }
   const now = new Date();
-
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
   const endOfMonth = new Date(
     now.getFullYear(),
@@ -48,7 +47,7 @@ module.exports = async (queryObj) => {
   const monthlyIncome = await Income.sum("amount", {
     where: {
       user_id: user.id,
-      createdAt: { [Op.between]: [startOfMonth, endOfMonth] },
+      income_date: { [Op.between]: [startOfMonth, endOfMonth] },
     },
   });
   const monthlyExpense = await Expense.sum("amount", {

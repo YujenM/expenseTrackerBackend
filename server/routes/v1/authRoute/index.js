@@ -40,6 +40,6 @@ expenseRouter.use("/user", require("./UserDetail"));
 
 expenseRouter.use("/income", require("./incomeRoute"));
 expenseRouter.use("/category", require("./category"));
-expenseRouter.use("/expense",require("./expenseRoute"))
-
+expenseRouter.use("/expense", require("./expenseRoute"));
+expenseRouter.use("/savings", require("./savingRoute"));
 module.exports = expenseRouter;
