@@ -60,6 +60,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "active",
         comment: "active, matured, withdrawn, cancelled",
       },
+      is_active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     },
     {
       sequelize,

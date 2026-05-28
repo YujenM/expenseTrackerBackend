@@ -2,17 +2,23 @@ const { Savings, Account } = require("../../models");
 const validationError = require("../../errors");
 
 module.exports = async (updateObj) => {
-  const saving = await Savings.findByPk(updateObj.id);
+  const saving = await Savings.findOne({
+    where: { id: updateObj.id },
+  });
   if (!saving) {
-    throw validationError("Saving not found");
+    throw new validationError("Saving not found", 404);
+  }
+
+  if (!saving.is_active) {
+    throw new validationError("Saving is not active", 400);
   }
 
   const account = await Account.findByPk(saving.account_id);
   if (!account) {
-    throw validationError("Account not found");
+    throw new validationError("Account not found", 404);
   }
   if (account.user_id !== updateObj.user_id) {
-    throw validationError("Account does not belong to user");
+    throw new validationError("Account does not belong to user", 403);
   }
 
   await saving.update({
