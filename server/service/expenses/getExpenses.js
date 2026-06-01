@@ -26,13 +26,14 @@ module.exports = async (obj) => {
   const monthlyExpense = await Expense.sum("amount", {
     where: {
       user_id: obj.userId,
-      createdAt: { [Op.between]: [startOfMonth, endOfMonth] },
+      expense_date: { [Op.between]: [startOfMonth, endOfMonth] },
     },
   });
 
   const weeklyExpense = await Expense.sum("amount", {
     where: {
       user_id: obj.userId,
+      expense_date: { [Op.between]: [startOfWeek, endOfWeek] },
     },
   });
 
@@ -57,7 +58,7 @@ module.exports = async (obj) => {
   const expenseTable = await Expense.findAll({
     where: {
       user_id: obj.userId,
-      createdAt: { [Op.between]: [startOfMonth, endOfMonth] },
+      expense_date: { [Op.between]: [startOfMonth, endOfMonth] },
     },
     attributes: { exclude: ["createdAt", "updatedAt"] },
     include: [
