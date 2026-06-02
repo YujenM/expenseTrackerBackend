@@ -5,6 +5,7 @@ const {
   sequelize,
 } = require("../../models");
 const validationError = require("../../errors");
+const monthlyInterest = require("../../utils/monthlyIntrestEarned");
 
 module.exports = async (createObj) => {
   const t = await sequelize.transaction();
@@ -21,7 +22,7 @@ module.exports = async (createObj) => {
 
     if (!savings) {
       await t.rollback();
-      throw new validationError("Savings account not found");
+      throw new validationError("Savings account not found", 404);
     }
 
     const account = await Account.findOne({
@@ -36,60 +37,34 @@ module.exports = async (createObj) => {
       await t.rollback();
       throw new validationError("Account not found");
     }
-
-    const allowedTypes = ["deposit", "deduction"];
-    if (!allowedTypes.includes(createObj.transaction_type)) {
+    if (account.balance < 0 || account.balance < createObj.amount) {
       await t.rollback();
-      throw new validationError("Invalid transaction type", 400);
+      throw new validationError("Insufficient account balance", 400);
     }
-    const principal = createObj.amount;
-    const startDate = new Date(savings.start_date);
-    const endDate = new Date(savings.end_date);
-    const n =
-      (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-      (endDate.getMonth() - startDate.getMonth());
 
-    const interestEarned = parseFloat(
-      (
-        principal *
-        ((n * (n + 1)) / (2 * 12 * 12)) *
-        (savings.interest_rate / 100)
-      ).toFixed(2),
+    const interestEarned = monthlyInterest(
+      createObj.amount,
+      savings.start_date,
+      savings.end_date,
+      savings.interest_rate,
     );
 
-    if (createObj.transaction_type === "deposit") {
-      if (account.balance < createObj.amount) {
-        await t.rollback();
-        throw new validationError("Insufficient account balance", 400);
-      }
-      await account.decrement("balance", {
-        by: createObj.amount,
-        transaction: t,
-      });
-      await savings.increment("total_deposited", {
-        by: createObj.amount,
-        transaction: t,
-      });
-    } else if (createObj.transaction_type === "deduction") {
-      if (savings.total_deposited < createObj.amount) {
-        await t.rollback();
-        throw new validationError("Insufficient savings balance", 400);
-      }
-      await account.increment("balance", {
-        by: createObj.amount,
-        transaction: t,
-      });
-      await savings.decrement("total_deposited", {
-        by: createObj.amount,
-        transaction: t,
-      });
+    if (account.balance < createObj.amount) {
+      await t.rollback();
+      throw new validationError("Insufficient account balance", 400);
     }
+
+    await account.decrement("balance", {
+      by: createObj.amount,
+      transaction: t,
+    });
+
     await SavingTransaction.create(
       {
         user_id: createObj.userId,
         account_id: savings.account_id,
         saving_id: createObj.savingId,
-        transaction_type: createObj.transaction_type,
+        transaction_type: "deposit",
         amount: createObj.amount,
         interest_earned: interestEarned,
         transaction_date: createObj.transaction_date,

@@ -6,4 +6,9 @@ router
   .post(savingTransactionController.createTransaction)
   .get(savingTransactionController.getTransaction);
 
+router
+  .route("/:transactionId")
+  .patch(savingTransactionController.updateTransaction)
+  .delete(savingTransactionController.deleteTransaction);
+
 module.exports = router;
