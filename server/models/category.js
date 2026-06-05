@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       name: { type: DataTypes.STRING(100) },
       imageUrl: { type: DataTypes.STRING(255) },
       type: { type: DataTypes.STRING(50) },
+      saving_type: { type: DataTypes.STRING(50), allowNull: false },
     },
     {
       sequelize,
