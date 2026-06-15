@@ -6,6 +6,7 @@ module.exports = async (req, res, next) => {
       fromAccountId: req.body.fromAccountId,
       toAccountId: req.body.toAccountId,
       amount: req.body.amount,
+      charge: req.body.charge,
     };
 
     const response = await accountService.accountBalanceTransfer(transferObj);

@@ -6,7 +6,7 @@ module.exports = async (queryObj) => {
     where: {
       type: queryObj.type,
     },
-    attributes: ["id", "name", "imageUrl", "type"],
+    attributes: ["id", "name", "imageUrl", "type", "saving_type"],
   });
 
   if (!category) {

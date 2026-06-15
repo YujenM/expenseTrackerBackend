@@ -80,13 +80,23 @@ if (process.env.DB_TYPE === "mysql") {
   })();
 }
 
-app.get('/',(req,res)=>{
+app.get("/", (req, res) => {
   res.status(200).json({
-    message:"expense Tracker Api"
-  })
-})
+    message: "expense Tracker Api",
+  });
+});
 
 app.use("/v1/expense", require("./routes/v1"));
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Something went wrong";
+  res.status(statusCode).json({
+    success: false,
+    message: message,
+    body: err.body || {},
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

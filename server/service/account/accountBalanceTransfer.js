@@ -14,11 +14,19 @@ module.exports = async (transferObj) => {
     if (!fromAccount || !toAccount) {
       throw new validationError("Account not found");
     }
-    if (fromAccount.balance < transferObj.amount) {
+
+    let finalAmount = transferObj.amount + transferObj.charge;
+    if (parseFloat(fromAccount.balance) < parseFloat(finalAmount)) {
       throw new validationError("Insufficient funds", 400);
     }
     await Account.decrement("balance", {
       by: transferObj.amount,
+      where: {
+        id: transferObj.fromAccountId,
+      },
+    });
+    await Account.decrement("balance", {
+      by: transferObj.charge,
       where: {
         id: transferObj.fromAccountId,
       },

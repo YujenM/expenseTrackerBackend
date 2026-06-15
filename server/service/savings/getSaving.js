@@ -1,4 +1,4 @@
-const { Savings, Category } = require("../../models");
+const { Savings, Category, Account, Provider } = require("../../models");
 const validationError = require("../../errors");
 
 module.exports = async (userId) => {
@@ -9,6 +9,18 @@ module.exports = async (userId) => {
         model: Category,
         as: "category",
         attributes: ["name", "imageUrl", "type"],
+      },
+      {
+        model: Account,
+        as: "account",
+        attributes: ["id"],
+        include: [
+          {
+            model: Provider,
+            as: "provider",
+            attributes: ["id", "name", "logo_url"],
+          },
+        ],
       },
     ],
   });
