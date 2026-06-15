@@ -15,7 +15,8 @@ module.exports = async (transferObj) => {
       throw new validationError("Account not found");
     }
 
-    let finalAmount = transferObj.amount + transferObj.charge;
+    let finalAmount =
+      parseFloat(transferObj.amount) + parseFloat(transferObj.charge);
     if (parseFloat(fromAccount.balance) < parseFloat(finalAmount)) {
       throw new validationError("Insufficient funds", 400);
     }
