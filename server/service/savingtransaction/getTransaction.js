@@ -1,23 +1,60 @@
-const { Savings, SavingTransaction } = require("../../models");
+const {
+  Savings,
+  SavingTransaction,
+  Category,
+  Account,
+  Provider,
+} = require("../../models");
 const validationError = require("../../errors");
 
 module.exports = async (savingObj) => {
-  const getAllTransaction = await Savings.findAll({
+  const saving = await Savings.findOne({
     where: {
       id: savingObj.savingId,
       user_id: savingObj.userId,
-      is_active: true,
     },
-    attributes: [],
-    include: {
-      model: SavingTransaction,
-      as: "transactions",
-    },
+    include: [
+      {
+        model: Category,
+        as: "category",
+        attributes: ["name", "imageUrl", "type"],
+      },
+      {
+        model: Account,
+        as: "account",
+        attributes: ["id"],
+        include: [
+          {
+            model: Provider,
+            as: "provider",
+            attributes: ["id", "name", "logo_url"],
+          },
+        ],
+      },
+      {
+        model: SavingTransaction,
+        as: "transactions",
+      },
+    ],
   });
 
-  if (!getAllTransaction) {
-    throw new validationError("No transactions found", 404);
-  }
+  const totalInterestEarned = saving.transactions.reduce((sum, t) => {
+    return sum + parseFloat(t.interest_earned);
+  }, 0);
 
-  return getAllTransaction;
+  const transactions = saving.transactions || [];
+  const lastTransaction = transactions[transactions.length - 1];
+  const nextDeductionDate = lastTransaction?.next_deduction_date || null;
+
+  return {
+    account: saving.account.provider,
+    interest: saving.interest_rate,
+    maturity: saving.maturity_amount,
+    status: saving.status,
+    Category: saving.Category,
+    total_deposited: saving.total_deposited,
+    totalInterestEarned,
+    nextDeductionDate,
+    savingTransaction: saving.transactions,
+  };
 };

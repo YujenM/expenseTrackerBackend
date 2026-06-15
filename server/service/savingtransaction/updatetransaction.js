@@ -33,10 +33,16 @@ module.exports = async (updateObj) => {
     });
 
     if (!account) {
+      await t.rollback();
       throw new validationError("Account not found", 404);
     }
 
-    if (account.balance < 0 || account.balance < updateObj.amount) {
+    console.log("acc", account.balance, "upd", updateObj.amount);
+
+    if (
+      parseInt(account.balance) < 0 ||
+      parseInt(account.balance) < parseInt(updateObj.amount)
+    ) {
       await t.rollback();
       throw new validationError("Insufficient account balance", 400);
     }
@@ -48,16 +54,15 @@ module.exports = async (updateObj) => {
     });
 
     if (!savingTransaction) {
+      await t.rollback();
       throw new validationError("Saving transaction not found", 404);
     }
 
-    if (account.balance < updateObj.amount) {
-      await t.rollback();
-      throw new validationError("Insufficient account balance", 400);
-    }
+    let interestEarned = savingTransaction?.interest_earned;
 
     if (updateObj.amount) {
-      const accountBalance = updateObj.amount - savingTransaction.amount;
+      const accountBalance =
+        parseInt(updateObj.amount) - parseInt(savingTransaction.amount);
 
       await account.decrement("balance", {
         by: accountBalance,
@@ -71,8 +76,8 @@ module.exports = async (updateObj) => {
         savings.interest_rate,
       );
     }
-    let interestEarned = savingTransaction.interest_earned;
-    await savingTransaction.update(
+
+    const updated = await savingTransaction.update(
       {
         amount: updateObj.amount,
         interest_earned: interestEarned,
@@ -87,6 +92,9 @@ module.exports = async (updateObj) => {
         transaction: t,
       },
     );
+
+    await t.commit();
+    return updated;
   } catch (err) {
     if (t && !t.finished) {
       await t.rollback();
