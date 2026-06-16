@@ -23,13 +23,6 @@ module.exports = async (deleteObj) => {
       throw new validationError("Savings account not found", 404);
     }
 
-    await Account.increment("balance", {
-      by: savings.amount,
-      where: {
-        id: deleteObj.userId,
-      },
-      transaction: t,
-    });
     const savingTransaction = await SavingTransaction.findOne({
       where: {
         id: deleteObj.transactionId,
@@ -42,6 +35,14 @@ module.exports = async (deleteObj) => {
       await t.rollback();
       throw new validationError("Transaction not found", 404);
     }
+  
+    await Account.increment("balance", {
+      by: savingTransaction.amount,
+      where: {
+        id: deleteObj.userId,
+      },
+      transaction: t,
+    });
 
     await savingTransaction.destroy({ transaction: t });
     await t.commit();

@@ -13,6 +13,7 @@ module.exports = async (savingObj) => {
       id: savingObj.savingId,
       user_id: savingObj.userId,
     },
+    order: [[{ model: SavingTransaction, as: "transactions" }, "transaction_date", "ASC"]],
     include: [
       {
         model: Category,
@@ -38,9 +39,17 @@ module.exports = async (savingObj) => {
     ],
   });
 
-  const totalInterestEarned = saving.transactions.reduce((sum, t) => {
-    return sum + parseFloat(t.interest_earned);
-  }, 0);
+  const totalInterestEarned = parseFloat(
+    saving.transactions.reduce((sum, t) => {
+      return sum + parseFloat(t.interest_earned);
+    }, 0).toFixed(4)
+  );
+
+  const totalDeposited = parseFloat(
+    saving.transactions.reduce((sum, t) => {
+      return sum + parseFloat(t.amount || 0);
+    }, 0).toFixed(4)
+  );
 
   const transactions = saving.transactions || [];
   const lastTransaction = transactions[transactions.length - 1];
@@ -52,7 +61,7 @@ module.exports = async (savingObj) => {
     maturity: saving.maturity_amount,
     status: saving.status,
     Category: saving.Category,
-    total_deposited: saving.total_deposited,
+    total_deposited: totalDeposited,
     totalInterestEarned,
     nextDeductionDate,
     savingTransaction: saving.transactions,
