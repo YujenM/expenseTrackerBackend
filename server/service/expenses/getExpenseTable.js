@@ -3,7 +3,6 @@ const { Op } = require("sequelize");
 const validationError = require("../../errors");
 
 module.exports = async (obj) => {
-  console.log("here1");
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
   const endOfMonth = new Date(
@@ -42,7 +41,7 @@ module.exports = async (obj) => {
       59,
       59,
     );
-    expenseWhere.expenseconsole.log("here2");_date = { [Op.between]: [startOfDay, endOfDay] };
+    expenseWhere.expense_date = { [Op.between]: [startOfDay, endOfDay] };
   } else {
     expenseWhere.expense_date = { [Op.between]: [startOfMonth, endOfMonth] };
   }
@@ -50,7 +49,6 @@ module.exports = async (obj) => {
   if (obj.search) {
     expenseWhere.description = { [Op.iLike]: `%${obj.search}%` };
   }
-
 
   const expenseResult = await Expense.findAndCountAll({
     where: expenseWhere,
