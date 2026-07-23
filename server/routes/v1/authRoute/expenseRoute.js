@@ -7,6 +7,7 @@ router
   .post(monthlyBudgetController.addExpenses)
   .get(monthlyBudgetController.getExpense);
 
+router.route("/expenseTable").get(monthlyBudgetController.getExpenseTable);
 router
   .route("/:expenseId")
   .put(monthlyBudgetController.updateExpense)

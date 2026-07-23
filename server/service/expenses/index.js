@@ -4,6 +4,7 @@ const updateExpense = require("./updateExpense");
 const deleteExpense = require("./deleteExpense");
 const getExpense = require("./getExpenses");
 const getExpenseBycategory = require("./getExpenseByCategory");
+const getExpenseTable = require("./getExpenseTable");
 
 module.exports = {
   monthlyBudget,
@@ -12,4 +13,5 @@ module.exports = {
   deleteExpense,
   getExpense,
   getExpenseBycategory,
+  getExpenseTable,
 };
