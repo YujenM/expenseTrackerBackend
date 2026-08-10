@@ -6,6 +6,8 @@ router
   .post(createSavingController.createSavings)
   .get(createSavingController.getSaving);
 
+  router.route("/overview").get(createSavingController.getSavingOverview)
+
 router
   .route("/:id")
   .patch(createSavingController.updateSavings)
