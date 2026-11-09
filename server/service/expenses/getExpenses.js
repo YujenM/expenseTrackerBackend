@@ -35,6 +35,7 @@ module.exports = async (obj) => {
   const weeklyExpense = await Expense.sum("amount", {
     where: {
       user_id: obj.userId,
+      is_show_expense: true,
       expense_date: { [Op.between]: [startOfWeek, endOfWeek] },
     },
   });
@@ -121,14 +122,13 @@ module.exports = async (obj) => {
   //     },
   //   ],
   // });
-  // const total = expenseResult.count; 
-  // const totalPages = Math.ceil(total / limit); 
+  // const total = expenseResult.count;
+  // const totalPages = Math.ceil(total / limit);
   return {
     monthlyBudget: user.monthly_budget,
     monthlyExpense,
     weeklyExpense,
     monthlySpentOnpercentage,
     dailyAverage,
-    
   };
 };

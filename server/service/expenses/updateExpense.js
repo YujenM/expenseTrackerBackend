@@ -42,6 +42,7 @@ module.exports = async (createObj) => {
       description: createObj?.description,
       expense_date: createObj?.expense_date,
       category_id: createObj?.category_id,
+      is_show_expense: createObj?.is_show_expense,
     },
     { transaction: t },
   );

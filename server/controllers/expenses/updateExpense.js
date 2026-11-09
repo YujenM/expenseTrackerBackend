@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
       amount: req.body.amount,
       description: req.body.description,
       expense_date: req.body.expense_date,
+      is_show_expense: req.body.is_show_expense,
     });
 
     res.status(200).json({

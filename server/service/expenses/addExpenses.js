@@ -37,6 +37,7 @@ module.exports = async (createObj) => {
       amount: createObj.amount,
       description: createObj.description,
       expense_date: createObj.expense_date,
+      is_show_expense: createObj.is_show_expense,
     },
     {
       transaction: t,
