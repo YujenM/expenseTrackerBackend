@@ -27,6 +27,7 @@ module.exports = async (obj) => {
   const monthlyExpense = await Expense.sum("amount", {
     where: {
       user_id: obj.userId,
+      is_show_expense: true,
       expense_date: { [Op.between]: [startOfMonth, endOfMonth] },
     },
   });
