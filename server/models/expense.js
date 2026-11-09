@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       amount: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
       description: { type: DataTypes.TEXT(200), allowNull: false },
       expense_date: { type: DataTypes.DATE, allowNull: false },
+      is_show_expense: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     },
     {
       sequelize,
